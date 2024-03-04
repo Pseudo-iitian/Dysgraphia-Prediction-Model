@@ -1,19 +1,15 @@
 import React from 'react';
 
-const SwitchTheme = () => {
-  const [theme, setTheme] = React.useState(
-    localStorage.getItem("theme") || "light"
-  );
-
+const SwitchTheme = ({ theme, setTheme }) => {
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
+    const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
   return (
     <div className="flex items-center">
-      {theme === "dark" ? (
+      {theme === 'dark' ? (
         <button
           onClick={toggleTheme}
           className="text-gray-300 rounded-full outline-none focus:outline-none"

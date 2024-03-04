@@ -1,33 +1,35 @@
-import { Link } from "react-router-dom";
-import ThemeChanger from "./SwitchTheme.jsx";
-import { Disclosure } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Disclosure } from '@headlessui/react';
+import ThemeChanger from './SwitchTheme.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/");
+    localStorage.removeItem('authToken');
+    navigate('/');
   };
 
   return (
-    <div className="w-full bg-dark">
+    <div className={`w-full ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
       <nav className="container relative flex flex-wrap items-center justify-between p-6 mx-auto lg:justify-between xl:px-0">
         <Disclosure>
           {({ open }) => (
             <>
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto">
-                {localStorage.getItem("authToken") ? (
+                {localStorage.getItem('authToken') ? (
                   <Link className="navbar-brand" to="/profile">
                     <img
                       src="./assets/avatar_icon.png"
                       alt="Avatar Logo"
-                      style={{ width: 40, height: 40, borderRadius: "50%" }}
+                      style={{ width: 40, height: 40, borderRadius: '50%' }}
                     />
                   </Link>
                 ) : (
-                  ""
+                  ''
                 )}
                 <Link to="/">
                   <span className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
@@ -95,7 +97,7 @@ const Navbar = () => {
                       </Link>
                     </div>
 
-                    {!localStorage.getItem("authToken") ? (
+                    {!localStorage.getItem('authToken') ? (
                       <div className="d-flex">
                         <Link
                           to="/login"
@@ -159,7 +161,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-          {!localStorage.getItem("authToken") ? (
+          {!localStorage.getItem('authToken') ? (
             <div className="d-flex">
               <Link
                 to="/login"
@@ -179,7 +181,7 @@ const Navbar = () => {
             </div>
           )}
 
-          <ThemeChanger />
+          <ThemeChanger theme={theme} setTheme={setTheme} />
         </div>
       </nav>
     </div>
